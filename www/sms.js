@@ -1,5 +1,5 @@
-var sms = {
-	send: function(phone, message, method, success, failure) {
+cordova.define("org.apache.cordova.plugin.sms.Sms", function(require, exports, module) { var sms = {
+	send: function(phone, message, imageFile, method, success, failure) {
 		phone = sms.convertPhoneToArray(phone);
 
 		cordova.exec(
@@ -7,7 +7,7 @@ var sms = {
 			failure,
 			'Sms',
 			'send',
-			[phone, message, method]
+			[phone, message, imageFile, method]
 		);
 	},
 
@@ -23,3 +23,5 @@ var sms = {
 };
 
 module.exports = sms;
+
+});
