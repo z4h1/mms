@@ -60,11 +60,11 @@ function pick() {
 		destinationType: Camera.DestinationType.DATA_URL,
 		sourceType: Camera.PictureSourceType.PHOTOLIBRARY
 	});
-
-	function onSuccess(imageData) {
-		var image = document.getElementById('myImage');
-		image.src = "data:image/jpeg;base64," + imageData;
-	}
+	
+function onSuccess(imageData) {
+	var image = document.getElementById('myImage');
+	image.src = "data:image/jpeg;base64," + imageData;
+}
 
 	function onFail(message) {
 		alert('Failed because: ' + message);
