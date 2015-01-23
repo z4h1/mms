@@ -85,7 +85,9 @@ When you click Send SMS, the Send To, message & img src (base64) are passed to s
 
 Then the base64 is converted to bitmap & stored in sdcard and then open in native sms composer.
 
-Always put “var intent = 'INTENT';“ in sendSms, so that the message will not be directly send.
+Always put “var intent = 'INTENT';“ in sendSms, so that the message would not be directly send.
+
+** i haven't done any validation to check if the "To" or "Message" or "image src" is empty or not. 
 
 
 License
