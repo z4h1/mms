@@ -1,98 +1,92 @@
-phonegap-sms-plugin
+Phonegap-MMS-Plugin
 =====================
 
-This Android Phonegap plugin allows you to easily send SMS in android using both native SMS Manager or by invoking the default android SMS app. This plugin works with PhoneGap 3.x version.
+This Android Phonegap plugin allows you to easily send MMS in android using both native SMS Manager or by invoking the default android SMS app. This plugin works with PhoneGap 3.x version.
 
-The Android portion was forked from https://github.com/javatechig/phonegap-sms-plugin by javatechig and then modified to upgrade it to phonegap 3.0.
+The Android portion was forked from https://github.com/aharris88/phonegap-sms-plugin by aharris88
+and then modified to support sending Multimedia Files.
 
-The iOS portion was copied from https://github.com/phonegap/phonegap-plugins by Jesse MacFadyen and then modified slightly to work with this plugin and phonegap 3.x.
+Only Android support this time.
 
 Installation
 =================
 
 Using the Phonegap CLI run:
 
-    phonegap local plugin add https://github.com/aharris88/phonegap-sms-plugin.git
+    Cordova plugin add https://github.com/christyrajupaul/phonegap-sms-plugin.git
 
 This will place the plugin in your plugins directory and update your android.json file that keeps track of installed plugins.
 
-Then when you run:
-
-    phonegap build android
-
-or
-
-    phonegap install android
-
-phonegap will put the necessary files into the platforms/android directory. It will update AndroidManifest.xml, res/xml/config.xml, and it will add the src/org/apache/cordova/sms directory.
 
 Example Usage
 =================
 
 HTML
 
-    <input name="" id="numberTxt" placeholder="Enter mobile number" value="" type="tel" />
-    <textarea name="" id="messageTxt" placeholder="Enter message"></textarea>
-    <input type="button" onclick="app.sendSms()" value="Send SMS" />
+    <input type="text" id="sendToNumber" placeholder="Send To" />
+	</br>
+	<input type="text" id="messageBody" placeholder="Message" />
+	</br>
+	<img id="myImage" style="border: 1px solid black; width: 125px; height: 75px;" />
+	</br>
+	<input type="button" value="Pick" onclick="pick()" />
+	</br>
+	</br>
+	<input type="button" value="sendSms" onclick="sendSms()" />
 
 Javascript
 
-    var app = {
-        sendSms: function() {
-            alert('click');
-            var number = document.getElementById('numberTxt').value;
-            var message = document.getElementById('messageTxt').value;
-            alert(number);
-            alert(message);
-            var intent = 'INTENT'; //leave empty for sending sms using default intent
-            var success = function () { alert('Message sent successfully'); };
-            var error = function (e) { alert('Message Failed:' + e); };
-            sms.send(number, message, intent, success, error);
-        }
-    };
+    
+function sendSms() {
+	var number = document.getElementById('sendToNumber').value;
+	var message = document.getElementById('messageBody').value;
 
-Frequently Asked Questions
+	var imageFile = document.getElementById("myImage").src;
+
+	var intent = 'INTENT'; //leave empty for sending sms using default intent       
+	sms.send(number, message, imageFile, intent, success, error);
+
+	var success = function() {
+		alert('Message sent successfully');
+	};
+	var error = function(e) {
+		alert('Message Failed:' + e);
+	};
+}
+
+function pick() {
+	navigator.camera.getPicture(onSuccess, onFail, {
+		quality: 50,
+		destinationType: Camera.DestinationType.DATA_URL,
+		sourceType: Camera.PictureSourceType.PHOTOLIBRARY
+	});
+
+	function onSuccess(imageData) {
+		var image = document.getElementById('myImage');
+		image.src = "data:image/jpeg;base64," + imageData;
+	}
+
+	function onFail(message) {
+		alert('Failed because: ' + message);
+	}
+}
+
+function base64() {
+	var imgsrc = document.getElementById("myImage").src;
+	alert(imgsrc);
+}
+
+Concept
 =================
+When you click pick, it will open up the file browser using camera plugin.
+There you can insert image to an image source as Base64.
 
-###I get this error. What's wrong?
+When you click Send SMS, the Send To, message & img src (base64) are passed to sms.java
 
-    compile:
-        [javac] Compiling 4 source files to /Users/username/MyProject/platforms/android/bin/classes
-        [javac] /Users/username/MyProject/platforms/android/src/org/apache/cordova/plugin/sms/Sms.java:15: cannot find symbol
-        [javac] symbol  : class Telephony
-        [javac] location: package android.provider
-        [javac] import android.provider.Telephony;
-        [javac]                        ^
-        [javac] /Users/username/MyProject/platforms/android/src/org/apache/cordova/plugin/sms/Sms.java:60: cannot find symbol
-        [javac] symbol  : variable KITKAT
-        [javac] location: class android.os.Build.VERSION_CODES
-        [javac]     if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-        [javac]                                                    ^
-        [javac] /Users/username/MyProject/platforms/android/src/org/apache/cordova/plugin/sms/Sms.java:61: package Telephony does not exist
-        [javac]       String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(this.cordova.getActivity());
-        [javac]                                               ^
-        [javac] 3 errors
+Then the base64 is converted to bitmap & stored in sdcard and then open in native sms composer.
 
-    BUILD FAILED
+Always put “var intent = 'INTENT';“ in sendSms, so that the message will not be directly send.
 
-The problem is that you need to make sure that you set the target to android-19 or later in your ./platforms/android/project.properties file like this:
-
-    # Project target.
-    target=android-19
-
-###How can I send an sms in my iOS app without passing control to the native app like it can be done on Android?
-
-This isn't possible on iOS. It requires that you show the user the native sms composer, to be able to send an sms.
-
-Contributing
-=================
-
-I believe that everything is working, feel free to put in an issue or to fork and make pull requests if you want to add a new feature.
-
-Things you can fix:
-* Allow for null number to be passed in
-  Right now, it breaks when a null value is passed in for a number, but it works if it's a blank string, and allows the user to pick the number
-  It should automatically convert a  null value to an empty string
 
 License
 =================
