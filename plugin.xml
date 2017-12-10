@@ -12,7 +12,7 @@
       <engine name="cordova" version=">=3.0.0" />
     </engines>    
 
-    <js-module src="www/mms.js" name="Mms">
+    <js-module src="www/sms.js" name="Mms">
         <clobbers target="window.mms" />
     </js-module>
 
