@@ -1,4 +1,4 @@
-package org.apache.cordova.plugin.sms;
+package org.apache.cordova.plugin.mms;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -25,7 +25,7 @@ import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-public class Sms extends CordovaPlugin {
+public class Mms extends CordovaPlugin {
 	public final String ACTION_SEND_SMS = "send";
 	private static final String INTENT_FILTER_SMS_SENT = "SMS_SENT";
 
