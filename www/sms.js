@@ -1,4 +1,4 @@
-cordova.define("org.apache.cordova.plugin.mms.Mms", function(require, exports, module) { var mms = {
+cordova.define("org.apache.cordova.plugin.mms", function(require, exports, module) { var mms = {
 	send: function(phone, message, imageFile, method, success, failure) {
 		phone = sms.convertPhoneToArray(phone);
 
