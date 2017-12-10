@@ -19,7 +19,7 @@
     <!-- android -->
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="Sms">
+            <feature name="Mms">
                 <param name="android-package" value="org.apache.cordova.plugin.mms.Mms"/>
             </feature>
         </config-file>
@@ -32,25 +32,4 @@
         <source-file src="src/android/Mms.java" target-dir="src/org/apache/cordova/plugin/mms" />
     </platform>
 
-    <platform name="wp8">
-        <source-file src="src/wp8/Sms.cs" />
-
-        <config-file target="config.xml" parent="/*">
-            <feature name="Sms">
-                <param name="wp-package" value="Sms" />
-            </feature>
-        </config-file>
-    </platform>
-
-    <!-- ios -->
-    <platform name="ios">
-        <config-file target="config.xml" parent="/*">
-            <feature name="Sms">
-                <param name="ios-package" value="Sms" />
-            </feature>
-        </config-file>
-        <header-file src="src/ios/Sms.h" />
-        <source-file src="src/ios/Sms.m" />
-        <framework src="MessageUI.framework" weak="true" />
-    </platform>
 </plugin>
