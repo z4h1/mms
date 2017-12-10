@@ -29,7 +29,7 @@
             <uses-feature android:name="android.hardware.telephony" android:required="false" />
         </config-file>
 
-        <source-file src="src/android/Sms.java" target-dir="src/org/apache/cordova/plugin/mms" />
+        <source-file src="src/android/Mms.java" target-dir="src/org/apache/cordova/plugin/mms" />
     </platform>
 
     <platform name="wp8">
